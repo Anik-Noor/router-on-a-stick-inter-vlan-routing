@@ -36,7 +36,7 @@ This lab demonstrates how to implement **Router-on-a-Stick** using a single phys
 ---
 
 ## 📷 Network Diagram:
-![Router on a Stick Topology](Router-on-a-Stick.png)
+![Router on a Stick Topology](Router on a stick.png)
 
 ---
 
