@@ -1,23 +1,51 @@
-# router-on-a-stick-inter-vlan-routing
+# Router-on-a-Stick – VLAN Trunking Lab (Cisco Packet Tracer)
 
-This lab demonstrates how to configure Inter-VLAN Routing using a Router-on-a-Stick method in Cisco Packet Tracer. It involves:
+This lab demonstrates how to implement **Router-on-a-Stick** using a single physical router interface to route traffic between multiple VLANs. The setup includes VLAN creation, trunking, and router subinterface configuration in Cisco Packet Tracer.
 
-Creating VLAN 10 and VLAN 20
+---
 
-Assigning switch ports to correct VLANs
+## 📘 Objectives:
+- Create VLAN 10 (Sales) and VLAN 20 (IT)
+- Configure trunking between switch and router
+- Assign PCs to VLANs with static IPs and gateways
+- Use router subinterfaces to enable Inter-VLAN Routing
+- Verify connectivity between devices in different VLANs
 
-Configuring trunk port between switch and router
+---
 
-Creating sub-interfaces on the router with 802.1Q encapsulation
+## 🧱 Topology:
+- **1 x Router (1841 or similar)**  
+- **1 x Layer 2 Switch (2960)**  
+- **2 x PCs** (assigned to different VLANs)
 
-Assigning gateway IPs to each VLAN
+---
 
-Testing connectivity between devices across VLANs
+## 💻 IP Configuration:
+- VLAN 10: `192.168.10.0/24`  
+- VLAN 20: `192.168.20.0/24`  
+- PC0: `192.168.10.1` → Gateway: `192.168.10.100`  
+- PC1: `192.168.20.1` → Gateway: `192.168.20.100`  
 
-📂 Files included:
+---
 
-router-on-a-stick.pkt file (Packet Tracer simulation)
+## 📂 Files Included:
+- `Router-on-a-Stick.pkt` – Cisco Packet Tracer lab file  
+- `Router-on-a-Stick.png` – Network topology diagram  
+- `config.txt` – CLI configuration commands 
 
-router-on-a-stick.png
+---
 
-configuration.text
+## 📷 Network Diagram:
+![Router on a Stick Topology](Router-on-a-Stick.png)
+
+---
+
+## 🔗 Author
+**Noor Anik**  
+[LinkedIn Profile](https://www.linkedin.com/in/noor-hossain-anik)  
+📧 noorhanik@outlook.com
+
+---
+
+> ✅ More Cisco labs and hands-on projects are available on my GitHub profile.
+
