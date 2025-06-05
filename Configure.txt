@@ -1,0 +1,108 @@
+
+===========Switch Configuration===========
+
+Switch>en
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname SW-1
+SW-1(config)#line vty 0 4
+SW-1(config-line)#password cisco
+SW-1(config-line)#login
+SW-1(config-line)#enable password cisco
+SW-1(config)#enable password cisco
+SW-1(config)#service password-en
+SW-1(config)#service password-encryption 
+SW-1(config)#end
+
+🔸 Create VLANs:
+SW-1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW-1(config)#vlan 10
+SW-1(config-vlan)#name Sales
+SW-1(config-vlan)#exit
+SW-1(config)#vlan 20
+SW-1(config-vlan)#name IT
+SW-1(config-vlan)#exit
+SW-1(config)#
+
+🔸 Assign ports to VLANs:
+SW-1(config)#int fa0/1
+SW-1(config-if)#switchport access vlan 10
+SW-1(config-if)#exit
+SW-1(config)#int fa0/2
+SW-1(config-if)#switchport access vlan 10
+SW-1(config-if)#exit
+SW-1(config)#int fa0/3
+SW-1(config-if)#switchport access vlan 20
+SW-1(config-if)#exit
+SW-1(config)#
+
+🔸 Configure Trunk Port to Router:
+SW-1(config)#int fa0/4
+SW-1(config-if)#switchport mode trunk
+SW-1(config-if)#
+SW-1(config-if)#exit
+SW-1(config)#exit
+SW-1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+🔍 Verify VLAN:
+SW-1#sh vlan br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/4, Fa0/5, Fa0/6, Fa0/7
+                                                Fa0/8, Fa0/9, Fa0/10, Fa0/11
+                                                Fa0/12, Fa0/13, Fa0/14, Fa0/15
+                                                Fa0/16, Fa0/17, Fa0/18, Fa0/19
+                                                Fa0/20, Fa0/21, Fa0/22, Fa0/23
+                                                Fa0/24, Gig0/1, Gig0/2
+10   Sales                            active    Fa0/1, Fa0/2
+20   IT                               active    Fa0/3
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+SW-1#
+SW-1#sh interfaces trunk
+
+
+=============Router configuration=============
+
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname R1
+R1(config)#
+R1(config)#
+🔸 Remove IP from physical interface:
+R1(config)#int fa0/0
+R1(config-if)#no ip address
+R1(config-if)# no shut
+R1(config-if)#exit
+R1(config)#
+🔸 Create sub-interface for VLAN 10:
+R1(config)#int fa0/0.10
+R1(config-subif)#encapsulation dot1q 10
+R1(config-subif)#ip address 192.168.10.100 255.255.255.0
+R1(config-subif)#no shut
+R1(config-subif)#exit
+R1(config)#
+🔸 Create sub-interface for VLAN 20:
+R1(config)#int fa0/0.20
+R1(config-subif)#encapsulation dot1q 20
+R1(config-subif)#ip address 192.168.20.100 255.255.255.0
+R1(config-subif)#no shut
+R1(config-subif)#exit
+R1(config)#
+R1(config)#exit
+
+R1#sh ip interface br
+Interface              IP-Address      OK? Method Status                Protocol 
+FastEthernet0/0        unassigned      YES unset  up                    up 
+FastEthernet0/0.10     192.168.10.100  YES manual up                    up 
+FastEthernet0/0.20     192.168.20.100  YES manual up                    up 
+FastEthernet0/1        unassigned      YES unset  administratively down down 
+Ethernet1/0            unassigned      YES unset  administratively down down 
+Vlan1                  unassigned      YES unset  administratively down down
+R1#
